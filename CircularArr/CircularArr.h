@@ -15,26 +15,28 @@ public:
 
     ~circular_array() = default;
 
-    circular_array(circular_array<T, arr_length>& arr){
-        for(int i = 0; i < size; ++i){
-            printf("%d, %d\n", this->data[i], arr[i]);
-            this->data[i] = arr[i];
+    circular_array( circular_array& arr):size(arr_length){
+        if(arr.getSize() == arr_length){
+            for(int i = 0; i < arr_length; ++i){
+                this->data[i] = arr[i];
+            }
         }
+        
     }
 
-    void operator =(circular_array<T, arr_length>& arr){
-        if(this->size == arr.getSize()){
-            for(int i = 0; i < size; ++i){
+    void operator =(circular_array& arr){
+        if(arr.getSize() == this->size){
+            for(int i = 0; i < this->size; ++i){
                 this->data[i] = arr[i];
             }
         }
     }
 
-    T& operator [](int i){
+    T& operator [](int i) {
         return this->data[i];
     }
 
-    int getSize(){
+    int getSize() const {
         return this->size;
     }
 
