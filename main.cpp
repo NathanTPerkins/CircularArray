@@ -4,9 +4,12 @@
 
 int main(){
 
-    circular_array<int, 5> test1;
-    for(int i = 0; i < test1.getSize(); ++i){
-        test1[i] = i;
-    }
+    c_ds::circular_array<int, 3> a1(2);
+    c_ds::circular_array<int, 3> a2(10);
+    a2(3);
+    a2(5);
+    a2.insert(6);
+    a2(1,2);
+    std::cout << a2 << a2.average() << std::endl;
     return 0;
 }

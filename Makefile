@@ -1,25 +1,29 @@
-CC = gcc
-CFLAGS = -L . -lCircularArr
+CC = g++
+CFLAGS = -L $(LIBDIR) -lCircularArr
+SRCDIR = ./src
+INCLUDEDIR = ./include
+LIBDIR = ./lib
+
 
 
 all: test
 
-CircularArr.o: ./CircularArr/CircularArr.cpp ./CircularArr/CircularArr.h
-	@$(CC) -c $< -o $@
+$(SRCDIR)/CircularArr.o: $(SRCDIR)/CircularArr.cpp $(INCLUDEDIR)/CircularArr.h
+	@$(CC) -c $< -o $@ -I $(INCLUDEDIR)
 
-libCircularArr.a: CircularArr.o
+$(LIBDIR)/libCircularArr.a: $(SRCDIR)/CircularArr.o
 	@echo "Creating CircularArr Library..."
-	@ar -crs $@ CircularArr.o
+	@ar -crs $@ $<
 	@ranlib $@
 	@echo "CircularArr Created."
 
-test: main.cpp libCircularArr.a
+test: main.cpp $(LIBDIR)/libCircularArr.a
 	@echo "Creating EXE..."
-	@gcc $< -o $@ $(CFLAGS) -I ./CircularArr
+	@$(CC) $< -o $@ $(CFLAGS) -I $(INCLUDEDIR)
 	@echo "EXE created."
 
 .PHONY: clean
 
 clean:
 	@echo "Cleaning Project..."
-	@rm -rf *.o *.a test
+	@rm -rf $(SRCDIR)/*.o $(LIBDIR)/*.a test
