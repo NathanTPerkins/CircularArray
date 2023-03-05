@@ -13,7 +13,7 @@ private:
     int __size;
 public:
     circular_array();
-    ~circular_array();
+    virtual ~circular_array();
     circular_array(const circular_array&);
     circular_array(const T&);
 
