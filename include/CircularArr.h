@@ -17,10 +17,10 @@ public:
     circular_array(const circular_array&);
     circular_array(const T&);
 
-    void operator=(const circular_array&);
+    circular_array& operator=(const circular_array&);
     T& operator[](const int&)const;
-    void operator()(const T&);
-    void operator()(const T&, const int&);
+    circular_array& operator()(const T&);
+    circular_array& operator()(const T&, const int&);
 
     int size()const;
     double average()const;
@@ -70,26 +70,30 @@ T& circular_array<T, arr_length>::operator[](const int& idx)const{
 
 //ASSIGNMENT OPERATOR
 template<typename T, int arr_length>
-void circular_array<T, arr_length>::operator=(const circular_array& arr){
+circular_array<T, arr_length>& circular_array<T, arr_length>::operator=(const circular_array& arr){
+    this->__arr = new T[arr.size()];
     this->__size = arr.size();
-    for(int i = 0; i < arr_length; ++i){
+    for(int i = 0; i < this->__size; ++i){
         this->__arr[i] = arr[i];
     }
+    return *this;
 }
 
 //ARRAY INSERTION OPERATOR
 template<typename T, int arr_length>
-void circular_array<T, arr_length>::operator()(const T& num){
+circular_array<T, arr_length>& circular_array<T, arr_length>::operator()(const T& num){
     for(int i = arr_length - 2; i >= 0; --i){
         this->__arr[i + 1] = this->__arr[i];
     }
     this->__arr[0] = num;
+    return *this;
 }
 
 //ARRAY INSERTION OPERATOR
 template<typename T, int arr_length>
-void circular_array<T, arr_length>::operator()(const T& num, const int& index){
+circular_array<T, arr_length>& circular_array<T, arr_length>::operator()(const T& num, const int& index){
     this->__arr[index] = num; 
+    return *this;
 }
 
 //SIZE METHOD
